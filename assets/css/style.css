@@ -1,5 +1,5 @@
 /* =============================================================
-   NAULI ATTIRE — Stylesheet
+   KebayaIn — Stylesheet
    Dipakai oleh index.html (homepage) dan katalog.html.
 
    Daftar isi
@@ -20,6 +20,7 @@
    14. Halaman katalog
    15. Jendela detail kebaya & kalender
    16. Animasi
+   17. Opsional (dinonaktifkan, hapus tanda komentar untuk memakai)
    ============================================================= */
 
 
@@ -37,6 +38,7 @@
 
   --f:    'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --serif:'Instrument Serif', Georgia, serif;
+  --logo: 'Playfair Display', 'Times New Roman', serif;   /* font wordmark & logo "KebayaIn" */
   --gx:   20px;                           /* jarak tepi & antar kolom */
   --hh:   64px;                           /* tinggi header (katalog) */
   --ease: cubic-bezier(.22,1,.36,1);
@@ -116,7 +118,7 @@ ul, ol { list-style: none; }
 .hdr { position: fixed; top: 0; left: 0; right: 0; z-index: 900; padding-top: 18px; color: #fff; mix-blend-mode: difference; }
 .hdr .grid { align-items: start; }
 .hdr a.t-xs { position: relative; }
-.logo { grid-column: 1/7; font-size: 15px; font-weight: 600; letter-spacing: -.01em; text-transform: uppercase; line-height: 1; }
+.logo { grid-column: 1/7; font-family: var(--logo); font-size: 21px; font-weight: 600; letter-spacing: -.01em; text-transform: none; line-height: 1; }
 .hdr-tag, .hdr-nav, .hdr-cta { display: none; }
 .hdr-nav a::before { content: attr(data-n); margin-right: 5px; opacity: .55; }
 .hdr-nav a.is-active { text-decoration: underline; text-underline-offset: 4px; }
@@ -168,9 +170,11 @@ ul, ol { list-style: none; }
 .hero-prog { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
 .hero-prog .bar { position: relative; flex: 1; min-width: 60px; height: 1px; background: rgba(255,255,255,.3); overflow: hidden; }
 .hero-prog .bar i { position: absolute; inset: 0; background: #fff; transform-origin: left; transform: scaleX(0); }
+/* wordmark "KebayaIn" — serif kontras tinggi, huruf besar-kecil seperti logo */
 .wordmark {
   padding: 0 calc(var(--gx) - .04em); white-space: nowrap;
-  font-size: 15.3vw; line-height: .8; letter-spacing: -.065em; font-weight: 500; text-transform: uppercase;
+  font-family: var(--logo);
+  font-size: 15.3vw; line-height: 1; letter-spacing: -.02em; font-weight: 600; text-transform: none;
 }
 
 
@@ -400,7 +404,7 @@ ul, ol { list-style: none; }
 .foot-cols a, .foot-cols p { display: block; font-size: 12px; font-weight: 500; line-height: 1.7; text-transform: uppercase; }
 .foot-cols a:hover { opacity: .55; }
 .foot-addr { margin-top: 12px; }
-.foot .wordmark { margin-top: 96px; color: var(--ink); }
+.foot .wordmark { margin-top: 96px; color: var(--ink); padding-bottom: .15em; }   /* ruang untuk ekor huruf "y" */
 .foot-bot { display: flex; justify-content: space-between; margin-top: 10px; padding: 14px var(--gx) 18px; border-top: 1px solid var(--line); }
 /* ruang untuk tombol "Lihat Katalog" di homepage */
 body:not(.page-katalog) .foot-bot { padding-bottom: calc(84px + env(safe-area-inset-bottom)); }
@@ -656,6 +660,7 @@ body.is-loading .cat-btn { transform: translateY(calc(100% + 40px)); }   /* ters
 .modal-badge { color: var(--mute); font-size: 11px; font-weight: 500; text-transform: uppercase; }
 .modal-product-name { margin: 10px 0 18px; font-size: clamp(40px,5.4vw,76px); line-height: .88; letter-spacing: -.05em; font-weight: 500; text-transform: uppercase; }
 .modal-product-price { padding-bottom: 18px; border-bottom: 1px solid var(--line-strong); font-size: 13px; font-weight: 500; text-transform: uppercase; }
+.modal-product-price::after { content: ' — sewa 3 hari'; color: var(--mute); }
 .modal-pkg-label { margin: 22px 0 6px; color: var(--mute); font-size: 11px; font-weight: 500; text-transform: uppercase; }
 .modal-pkg-list { margin-bottom: 28px; counter-reset: pk; }
 .modal-pkg-list li { display: grid; grid-template-columns: 28px 1fr; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 12px; font-weight: 500; text-transform: uppercase; counter-increment: pk; }
@@ -707,12 +712,30 @@ body.is-loading .cat-btn { transform: translateY(calc(100% + 40px)); }   /* ters
 /* muncul saat discroll */
 .rv { opacity: 0; transform: translateY(24px); transition: opacity 1s var(--ease), transform 1.1s var(--ease); }
 .rv.in { opacity: 1; transform: none; }
-/* judul muncul per kata */
-.split .w { display: inline-block; overflow: hidden; vertical-align: top; }
-.split .w > span { display: inline-block; transform: translateY(105%); transition: transform 1s var(--ease); }
+/* judul muncul per kata (padding bawah supaya ekor huruf seperti "y" tidak terpotong) */
+.split .w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .2em; margin-bottom: -.2em; }
+.split .w > span { display: inline-block; transform: translateY(125%); transition: transform 1s var(--ease); }
 .split.in .w > span { transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .rv, .split .w > span { opacity: 1; transform: none; }
 }
+
+
+/* ── 17. OPSIONAL (dinonaktifkan) ──────────────────────────────
+   Untuk mengaktifkan, hapus baris pembuka dan penutup komentar
+   yang membungkus blok CSS di bawah ini.
+   ───────────────────────────────────────────────────────────── */
+
+/* OPSIONAL A — wordmark hero & footer berwarna emas seperti logo
+.hero .wordmark, .foot .wordmark { color: #E2B872; }
+*/
+
+/* OPSIONAL B — semua judul besar ikut serif Playfair
+.big, .mom-nm, .idx-row .nm, .g-head h3, .k-title, .modal-product-name, .cal-title, .mnav li a {
+  font-family: var(--logo); font-weight: 500; text-transform: none; letter-spacing: -.02em;
+  font-variant-numeric: lining-nums;
+}
+.big em, .mom-nm em { font-family: var(--logo); font-style: italic; font-weight: 500; font-size: 1em; }
+*/
