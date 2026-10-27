@@ -132,7 +132,7 @@ form?.addEventListener('submit', e => {
     ? new Date(f.get('tanggal') + 'T00:00').toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })
     : '-';
   const msg = [
-    'Halo Nauli Attire, saya ingin booking kebaya.', '',
+    'Halo Mojang.Kebaya, saya ingin booking kebaya.', '',
     `Nama: ${f.get('nama') || '-'}`,
     `Tanggal acara: ${tgl}`,
     `Kebaya: ${f.get('kebaya') || 'Belum memilih'}`,
